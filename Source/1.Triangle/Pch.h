@@ -11,3 +11,5 @@
 
 // Std libraries
 #include <vector>
+
+using namespace DirectX;	// For DirectXMath library
