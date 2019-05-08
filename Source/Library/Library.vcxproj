@@ -148,7 +148,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ColorHelper.cpp" />
+    <ClCompile Include="DrawableGameEntity.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameClock.cpp" />
+    <ClCompile Include="GameEntity.cpp" />
+    <ClCompile Include="GameException.cpp" />
+    <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pch.h</PrecompiledHeaderFile>
@@ -156,10 +162,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColorHelper.h" />
+    <ClInclude Include="DrawableGameEntity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameClock.h" />
+    <ClInclude Include="GameEntity.h" />
+    <ClInclude Include="GameException.h" />
+    <ClInclude Include="GameTime.h" />
     <ClInclude Include="Pch.h" />
+    <ClInclude Include="Utility.h" />
+    <ClInclude Include="VertexDeclarations.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

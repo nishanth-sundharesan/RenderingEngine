@@ -1,8 +1,12 @@
 #pragma once
 #include "Pch.h"
+#include <vector>
+#include "GameEntity.h"
 
 namespace Library
 {
+	//class GameEntity;
+
 	class Game
 	{
 	public:
@@ -44,15 +48,15 @@ namespace Library
 		virtual void Run();
 		virtual void Exit();
 		virtual void Initialize();
-		/*virtual void Update(const GameTime& gameTime);
-		virtual void Draw(const GameTime& gameTime);*/
+		//virtual void Update(const GameTime& gameTime);
+		virtual void Draw();
 
 		virtual void ResetRenderTargets();
 		virtual void UnbindPixelShaderResources(UINT startSlot, UINT count);
 
 	protected:
-		/*virtual void Begin() override;
-		virtual void End() override;*/
+		virtual void Begin();
+		virtual void End();
 		virtual void InitializeWindow();
 		virtual void InitializeDirectX();
 		virtual void Shutdown();
@@ -75,15 +79,15 @@ namespace Library
 
 		//GameClock mGameClock;
 		//GameTime mGameTime;
-		//std::vector<GameComponent*> mComponents;
+		std::vector<GameEntity*> mEntities;
 		//ServiceContainer mServices;
 
-		//D3D_FEATURE_LEVEL mFeatureLevel;
+		D3D_FEATURE_LEVEL mFeatureLevel;
 		ID3D11Device* mDirect3DDevice;
 		ID3D11DeviceContext* mDirect3DDeviceContext;
-		IDXGISwapChain* mSwapChain;
+		IDXGISwapChain1* mSwapChain;
 
-		UINT mFrameRate;
+		UINT mRefreshRate;
 		bool mIsFullScreen;
 		//bool mDepthStencilBufferEnabled;
 		bool mMultiSamplingEnabled;
