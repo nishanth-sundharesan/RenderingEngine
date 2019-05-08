@@ -98,7 +98,7 @@ namespace Library
 
 	private:
 		void CenterWindow(std::int32_t windowWidth, std::int32_t windowHeight, POINT& outPoint) const;
-		static LRESULT WINAPI WindowProc(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam);
+		static LRESULT CALLBACK WindowProc(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam);	// This is the main message handler for the program
 	};
 }
 
