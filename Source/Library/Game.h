@@ -83,8 +83,8 @@ namespace Library
 		//ServiceContainer mServices;
 
 		D3D_FEATURE_LEVEL mFeatureLevel;
-		ID3D11Device* mDirect3DDevice;
-		ID3D11DeviceContext* mDirect3DDeviceContext;
+		ID3D11Device1* mDirect3DDevice;
+		ID3D11DeviceContext1* mDirect3DDeviceContext;
 		IDXGISwapChain1* mSwapChain;
 
 		UINT mRefreshRate;

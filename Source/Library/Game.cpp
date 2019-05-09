@@ -22,7 +22,7 @@ namespace Library
 		mScreenHeight(sDefaultScreenHeight),
 		//mGameClock(),
 		//mGameTime(),
-		mFeatureLevel(D3D_FEATURE_LEVEL_11_0),
+		mFeatureLevel(),
 		mDirect3DDevice(nullptr),
 		mDirect3DDeviceContext(nullptr),
 		mSwapChain(nullptr),
@@ -286,7 +286,7 @@ namespace Library
 			mInstance,										// The application handle
 			nullptr);											// This is used with multiple windows, so set nullptr
 
-// Display the window on the screen
+		// Display the window on the screen
 		ShowWindow(mWindowHandle, mShowCommand);
 		UpdateWindow(mWindowHandle);
 	}
@@ -305,8 +305,8 @@ namespace Library
 			D3D_FEATURE_LEVEL_11_0,			
 		};
 
-		/*ID3D11Device* direct3DDevice = nullptr;
-		ID3D11DeviceContext* direct3DDeviceContext = nullptr;*/
+		ID3D11Device* direct3DDevice = nullptr;
+		ID3D11DeviceContext* direct3DDeviceContext = nullptr;
 		if (FAILED(hr = D3D11CreateDevice(
 										NULL,
 										D3D_DRIVER_TYPE_HARDWARE,
@@ -315,14 +315,14 @@ namespace Library
 										featureLevels,
 										ARRAYSIZE(featureLevels),
 										D3D11_SDK_VERSION,
-										&mDirect3DDevice,
+										&direct3DDevice,
 										&mFeatureLevel,
-										&mDirect3DDeviceContext)))
+										&direct3DDeviceContext)))
 		{			
 			throw GameException("D3D11CreateDevice() failed", hr);
 		}
 
-		/*if (mFeatureLevel != D3D_FEATURE_LEVEL_11_0)
+		if (mFeatureLevel != D3D_FEATURE_LEVEL_11_0)
 		{
 			throw GameException("GPU doesn't support DirectX 11.");
 		}
@@ -339,7 +339,7 @@ namespace Library
 
 		ReleaseObject(direct3DDevice);
 		ReleaseObject(direct3DDeviceContext);
-*/
+
 		// Check for multi-sampling quality
 		mDirect3DDevice->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, mMultiSamplingCount, &mMultiSamplingQualityLevels);
 		if (mMultiSamplingQualityLevels == 0)
