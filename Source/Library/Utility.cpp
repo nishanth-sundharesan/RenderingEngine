@@ -7,6 +7,7 @@ using namespace std;
 
 namespace Library
 {
+	// TODO: Add code to load files from the output directory rather than changing it from the project settings as it cannot be committed. Probably with shlapi.
 	void Utility::LoadBinaryFile(const string& filename, vector<char>& data)
 	{
 		ifstream file(filename.c_str(), ios::binary);

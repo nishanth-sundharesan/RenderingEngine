@@ -1,16 +1,15 @@
 #pragma once
 #include "PchLibrary.h"
 #include <vector>
-#include "GameEntity.h"
 
 namespace Library
 {
-	//class GameEntity;
+	class GameEntity;
 
 	class Game
 	{
 	public:
-		Game(HINSTANCE instance, const std::wstring& windowClassName, const std::wstring& windowTitle, int showCommand);
+		Game(HINSTANCE instance, const std::wstring& windowClassName, const std::wstring& windowTitle, std::int32_t showCommand);
 		virtual ~Game() = default;
 
 		Game(const Game& rhs) = delete;
@@ -25,8 +24,8 @@ namespace Library
 		const WNDCLASSEX& GetWindowClass() const;
 		const std::wstring& WindowClassName() const;
 		const std::wstring& WindowTitle() const;
-		int GetScreenWidth() const;
-		int GetScreenHeight() const;
+		std::int32_t GetScreenWidth() const;
+		std::int32_t GetScreenHeight() const;
 
 		// Direct3D related
 		ID3D11Device* GetDirect3DDevice() const;
@@ -42,8 +41,8 @@ namespace Library
 		UINT GetMultiSamplingCount() const;
 		UINT GetMultiSamplingQualityLevels() const;
 
-		/*const std::vector<GameComponent*>& Components() const;
-		const ServiceContainer& Services() const;*/
+		const std::vector<GameEntity*>& GetEntities() const;
+		//const ServiceContainer& Services() const;
 
 		virtual void Run();
 		virtual void Exit();
@@ -52,7 +51,7 @@ namespace Library
 		virtual void Draw();
 
 		virtual void ResetRenderTargets();
-		virtual void UnbindPixelShaderResources(UINT startSlot, UINT count);
+		//virtual void UnbindPixelShaderResources(UINT startSlot, UINT count);
 
 	protected:
 		virtual void Begin();
@@ -69,7 +68,7 @@ namespace Library
 		HINSTANCE mInstance;
 		std::wstring mWindowClassName;
 		std::wstring mWindowTitle;
-		int mShowCommand;
+		std::int32_t mShowCommand;
 
 		HWND mWindowHandle;			// Handle for the window, filled by the function CreateWindowEx()
 		WNDCLASSEX mWindowClass;	// The struct that holds information for the window class
@@ -88,7 +87,7 @@ namespace Library
 		IDXGISwapChain1* mSwapChain;
 
 		UINT mRefreshRate;
-		bool mIsFullScreen;
+		bool mIsFullScreen;			// TODO: Need to add more functionality to full screen.
 		//bool mDepthStencilBufferEnabled;
 		bool mMultiSamplingEnabled;
 		UINT mMultiSamplingCount;
@@ -105,6 +104,3 @@ namespace Library
 		static LRESULT CALLBACK WindowProc(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam);	// This is the main message handler for the program
 	};
 }
-
-// TODO
-// 1. Check all the places where UINT is present and check if we can replace them

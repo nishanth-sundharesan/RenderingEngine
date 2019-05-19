@@ -11,7 +11,7 @@ namespace Library
 	const UINT Game::sDefaultFrameRate = 60;
 	const UINT Game::sDefaultMultiSamplingCount = 4;
 
-	Game::Game(HINSTANCE instance, const wstring& windowClassName, const wstring& windowTitle, int showCommand) :
+	Game::Game(HINSTANCE instance, const wstring& windowClassName, const wstring& windowTitle, int32_t showCommand) :
 		mInstance(instance),
 		mWindowClassName(windowClassName),
 		mWindowTitle(windowTitle),
@@ -68,14 +68,14 @@ namespace Library
 		return mWindowTitle;
 	}
 
-	int Game::GetScreenWidth() const
+	int32_t Game::GetScreenWidth() const
 	{
-		return mScreenWidth;
+		return static_cast<int32_t>(mScreenWidth);
 	}
 
-	int Game::GetScreenHeight() const
+	int32_t Game::GetScreenHeight() const
 	{
-		return mScreenHeight;
+		return static_cast<int32_t>(mScreenHeight);
 	}
 
 
@@ -140,10 +140,10 @@ namespace Library
 		return mMultiSamplingQualityLevels;
 	}
 
-	//const vector<GameComponent*>& Game::Components() const
-	//{
-	//	return mComponents;
-	//}
+	const std::vector<GameEntity*>& Game::GetEntities() const
+	{
+		return mEntities;
+	}
 
 	//const ServiceContainer& Game::Services() const
 	//{
@@ -177,7 +177,7 @@ namespace Library
 
 			//mGameClock.UpdateGameTime(mGameTime);
 			//Update(mGameTime);
-			Draw();			
+			Draw();
 		}
 
 		Shutdown();
@@ -194,6 +194,8 @@ namespace Library
 		{
 			entity->Initialize();
 		}
+
+		Begin();
 	}
 
 	//void Game::Update(const GameTime& gameTime)
@@ -222,18 +224,18 @@ namespace Library
 
 	void Game::ResetRenderTargets()
 	{
-		//mDirect3DDeviceContext->OMSetRenderTargets(1, &mRenderTargetView, mDepthStencilView);
+		mDirect3DDeviceContext->OMSetRenderTargets(1, &mRenderTargetView, nullptr);		// Not binding depth stencil view as of now.
 	}
 
-	void Game::UnbindPixelShaderResources(UINT startSlot, UINT count)
-	{
-		startSlot;
-		count;
+	//void Game::UnbindPixelShaderResources(UINT startSlot, UINT count)
+	//{
+	//	startSlot;
+	//	count;
 
-		/*static ID3D11ShaderResourceView* emptySRV = nullptr;
+	//	/*static ID3D11ShaderResourceView* emptySRV = nullptr;
 
-		mDirect3DDeviceContext->PSSetShaderResources(startSlot, count, &emptySRV);*/
-	}
+	//	mDirect3DDeviceContext->PSSetShaderResources(startSlot, count, &emptySRV);*/
+	//}
 
 	void Game::Begin()
 	{
@@ -250,15 +252,13 @@ namespace Library
 		ZeroMemory(&mWindowClass, sizeof(WNDCLASSEX));
 
 		// Fill in the struct with the needed information
-		mWindowClass.cbSize = sizeof(WNDCLASSEX);
-		// mWindow.style = CS_CLASSDC;
+		mWindowClass.cbSize = sizeof(WNDCLASSEX);		
 		mWindowClass.style = CS_HREDRAW | CS_VREDRAW;	// Draw if a window is moved horizontally or vertically.
 		mWindowClass.lpfnWndProc = WindowProc;
 		mWindowClass.hInstance = mInstance;
-		// mWindow.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
-		// mWindow.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
-		mWindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-		//wc.hbrBackground = (HBRUSH) COLOR_WINDOW;
+		mWindowClass.hIcon = LoadIcon(nullptr, IDI_APPLICATION);	// Load the default Icon. Probably customize it in future. See https://docs.microsoft.com/en-us/windows/desktop/winmsg/about-window-classes#class-icons
+		mWindowClass.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);	// and https://docs.microsoft.com/en-us/windows/desktop/api/Winuser/nf-winuser-loadicona
+		mWindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);		
 		mWindowClass.lpszClassName = mWindowClassName.c_str();
 
 		// Register the window class
@@ -283,7 +283,7 @@ namespace Library
 			windowRectangle.bottom - windowRectangle.top,		// Height of the window
 			nullptr,											// We have no parent window, so set nullptr
 			nullptr,											// We aren't using menus, so set nullptr
-			mInstance,										// The application handle
+			mInstance,											// The application handle
 			nullptr);											// This is used with multiple windows, so set nullptr
 
 		// Display the window on the screen
@@ -357,7 +357,8 @@ namespace Library
 		swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;					// Format of the back buffer
 		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;		// How the swap chain is to be used
 		swapChainDesc.BufferCount = 1;										// One back buffer
-		//swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;				// We cannot use DXGI_SWAP_EFFECT_FLIP_DISCARD as we support anti-aliasing.
+																			// See https://docs.microsoft.com/en-us/windows/desktop/api/dxgi/ne-dxgi-dxgi_swap_effect for more info.
 
 		if (mMultiSamplingEnabled)
 		{
@@ -394,7 +395,7 @@ namespace Library
 		DXGI_SWAP_CHAIN_FULLSCREEN_DESC fullScreenDesc;
 		ZeroMemory(&fullScreenDesc, sizeof(fullScreenDesc));
 
-		// The refresh rate parameter needs to be verified to check if should be set to 60.
+		// TODO: The refresh rate parameter needs to be verified to check if should be set to 60.
 		fullScreenDesc.RefreshRate.Numerator = mRefreshRate;
 		fullScreenDesc.RefreshRate.Denominator = 1;
 		fullScreenDesc.Windowed = !mIsFullScreen;
@@ -482,6 +483,8 @@ namespace Library
 
 	void Game::Shutdown()
 	{
+		End();
+
 		for (GameEntity* entity : mEntities)
 		{						
 			entity->Shutdown();			
@@ -531,5 +534,4 @@ namespace Library
 		// Handle any messages that the switch case didn't handle
 		return DefWindowProc(windowHandle, message, wParam, lParam);
 	}
-
 }

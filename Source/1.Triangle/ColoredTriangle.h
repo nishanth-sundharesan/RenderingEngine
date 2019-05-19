@@ -3,7 +3,7 @@
 
 namespace Rendering
 {
-	class ColoredTriangle : public Library::DrawableGameEntity
+	class ColoredTriangle final: public Library::DrawableGameEntity
 	{
 	public:
 		ColoredTriangle(Library::Game& game);

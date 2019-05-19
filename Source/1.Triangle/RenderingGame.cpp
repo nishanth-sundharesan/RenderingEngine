@@ -9,7 +9,7 @@ using namespace Library;
 
 namespace Rendering
 {
-	RenderingGame::RenderingGame(HINSTANCE instance, const wstring & windowClassName, const wstring & windowTitle, int showCommand) :
+	RenderingGame::RenderingGame(HINSTANCE instance, const wstring& windowClassName, const wstring& windowTitle, int32_t showCommand) :
 		Game(instance, windowClassName, windowTitle, showCommand),
 		mColoredTriangle(nullptr)
 	{
@@ -17,7 +17,8 @@ namespace Rendering
 
 	void RenderingGame::Initialize()
 	{
-		mColoredTriangle = make_unique<ColoredTriangle>(*this);		
+		mColoredTriangle = make_unique<ColoredTriangle>(*this);	
+
 		mEntities.push_back(mColoredTriangle.get());
 
 		Game::Initialize();
@@ -26,7 +27,6 @@ namespace Rendering
 	void RenderingGame::Draw()
 	{
 		mDirect3DDeviceContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&Library::ColorHelper::CornflowerBlue));
-		//mDirect3DDeviceContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 		Game::Draw();
 
