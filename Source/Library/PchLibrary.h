@@ -6,8 +6,10 @@
 // DirectX library
 #include <d3d11_1.h>
 
+// Std libraries
 #include <string>
 #include <cstdint>
+#include <memory>
 
 #include "GameException.h"
 

@@ -11,6 +11,7 @@
 
 // Std libraries
 #include <vector>
+#include <cstdint>
 
 using namespace DirectX;	// For DirectXMath library
 
