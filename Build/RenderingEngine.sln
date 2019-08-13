@@ -11,6 +11,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Library", "..\Source\Library\Library.vcxproj", "{75A7EFEA-9C81-4B6E-AB30-A00CB6DF21AE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.ColoredCube", "..\Source\2.ColoredCube\2.ColoredCube.vcxproj", "{A3FA7054-4DEB-4CBF-846D-689BE67FBC8E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75A7EFEA-9C81-4B6E-AB30-A00CB6DF21AE} = {75A7EFEA-9C81-4B6E-AB30-A00CB6DF21AE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
