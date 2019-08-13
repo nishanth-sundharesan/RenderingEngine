@@ -15,7 +15,8 @@ namespace Rendering
 		mVertexShader(nullptr),
 		mPixelShader(nullptr),
 		mInputLayout(nullptr),
-		mVertexBuffer(nullptr)
+		mVertexBuffer(nullptr),
+		mTime(0.0f)
 	{
 	}
 
@@ -79,14 +80,29 @@ namespace Rendering
 		vertexSubResourceData.pSysMem = vertices;
 
 		ThrowIfFailed(mGame->GetDirect3DDevice()->CreateBuffer(&vertexBufferDescription, &vertexSubResourceData, &mVertexBuffer), "ID3D11Device::CreateBuffer() failed.");
+
+
+		D3D11_BUFFER_DESC constantBufferDescription;
+		ZeroMemory(&constantBufferDescription, sizeof(constantBufferDescription));
+
+		constantBufferDescription.Usage = D3D11_USAGE_DEFAULT;
+		constantBufferDescription.ByteWidth = 64;
+		constantBufferDescription.BindFlags = D3D11_BIND_CONSTANT_BUFFER;		
+
+
+		mGame->GetDirect3DDevice()->CreateBuffer(&constantBufferDescription, nullptr, &mConstantBuffer);
+		mGame->GetDirect3DDeviceContext()->VSSetConstantBuffers(0, 1, &mConstantBuffer);
 	}
 
 	void ColoredTriangle::Draw()
 	{
+		mTime += 0.005f;
+
+
 		ID3D11DeviceContext* direct3DDeviceContext = mGame->GetDirect3DDeviceContext();
 		direct3DDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		direct3DDeviceContext->IASetInputLayout(mInputLayout);
-
+		
 		// Bind the vertex buffer array to input assembly.
 		UINT stride = sizeof(VertexPositionColor);
 		UINT offset = 0;
@@ -94,7 +110,24 @@ namespace Rendering
 
 		// Set the shader objects
 		direct3DDeviceContext->VSSetShader(mVertexShader, 0, 0);
-		direct3DDeviceContext->PSSetShader(mPixelShader, 0, 0);		
+		direct3DDeviceContext->PSSetShader(mPixelShader, 0, 0);
+
+		
+		// World Matrix
+		XMMATRIX worldMatrix = XMMatrixRotationY(mTime);
+
+		// View Matrix
+		XMVECTOR cameraPosition = XMVectorSet(1.5f, 0.5f, 1.5f, 0);
+		XMVECTOR cameraLookAt = XMVectorReplicate(0.0f);
+		XMVECTOR cameraUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+		XMMATRIX viewMatrix = XMMatrixLookAtLH(cameraPosition, cameraLookAt, cameraUp);
+
+		// Projection Matrix
+		XMMATRIX projectionMatrix = XMMatrixPerspectiveFovLH(XMConvertToRadians(45), static_cast<float>(mGame->GetScreenWidth()) / mGame->GetScreenHeight(), 0.1f, 100.0f);
+
+		XMMATRIX worldViewProjectionMatrix = worldMatrix * viewMatrix * projectionMatrix;
+		mGame->GetDirect3DDeviceContext()->UpdateSubresource(mConstantBuffer, 0, 0, &worldViewProjectionMatrix, 0, 0);
+
 
 		direct3DDeviceContext->Draw(3, 0);	// 3 is the total number of vertices.		
 	}

@@ -26,5 +26,8 @@ namespace Rendering
 		ID3D11PixelShader* mPixelShader;
 		ID3D11InputLayout* mInputLayout;
 		ID3D11Buffer* mVertexBuffer;
+		ID3D11Buffer *mConstantBuffer;
+
+		float mTime = 0.0f;
 	};
 }

@@ -1,3 +1,8 @@
+cbuffer ConstantBuffer
+{
+	float4x4 WorldViewProjectionMatrix;
+};
+
 struct VS_INPUT
 {
 	float3 Position : POSITION;
@@ -13,8 +18,9 @@ struct VS_OUTPUT
 VS_OUTPUT main(VS_INPUT IN)
 {
 	VS_OUTPUT OUT = (VS_OUTPUT) 0;
+	
+	OUT.Position = mul(WorldViewProjectionMatrix, float4(IN.Position, 1.0));
 
-	OUT.Position = float4(IN.Position, 1.0f);
 	OUT.Color = IN.Color;
 
 	return OUT;
