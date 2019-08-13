@@ -405,7 +405,7 @@ namespace Library
 			ReleaseObject(dxgiDevice);
 			ReleaseObject(dxgiAdapter);
 			ReleaseObject(dxgiFactory);
-			throw GameException("IDXGIDevice::CreateSwapChainForHwnd() failed.", hr);
+			throw GameException("IDXGIFactory2::CreateSwapChainForHwnd() failed.", hr);
 		}
 
 		ReleaseObject(dxgiDevice);
@@ -427,7 +427,7 @@ namespace Library
 		if (FAILED(hr = mDirect3DDevice->CreateRenderTargetView(backBuffer, nullptr, &mRenderTargetView)))
 		{
 			ReleaseObject(backBuffer);
-			throw GameException("IDXGIDevice::CreateRenderTargetView() failed.", hr);
+			throw GameException("ID3D11Device1::CreateRenderTargetView() failed.", hr);
 		}
 
 		ReleaseObject(backBuffer);
