@@ -28,7 +28,7 @@ namespace Library
 		mSwapChain(nullptr),
 		mRefreshRate(sDefaultFrameRate),
 		mIsFullScreen(false),
-		//mDepthStencilBufferEnabled(true), 
+		mDepthStencilBufferEnabled(true),
 		mMultiSamplingEnabled(true),
 		mMultiSamplingCount(sDefaultMultiSamplingCount),
 		mMultiSamplingQualityLevels(0),
@@ -90,10 +90,10 @@ namespace Library
 		return mDirect3DDeviceContext;
 	}
 
-	/*bool Game::IsDepthStencilBufferEnabled() const
+	bool Game::IsDepthStencilBufferEnabled() const
 	{
 		return mDepthStencilBufferEnabled;
-	}*/
+	}
 
 	ID3D11RenderTargetView* Game::GetRenderTargetView() const
 	{
@@ -434,39 +434,44 @@ namespace Library
 		#pragma endregion
 
 		#pragma region Depth Stencil view stuff
-		/*if (mDepthStencilBufferEnabled)
+		if (mDepthStencilBufferEnabled)
 		{
-			D3D11_TEXTURE2D_DESC depthStencilDesc;
-			ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
-			depthStencilDesc.Width = mScreenWidth;
-			depthStencilDesc.Height = mScreenHeight;
-			depthStencilDesc.MipLevels = 1;
-			depthStencilDesc.ArraySize = 1;
-			depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-			depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-			depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
+			D3D11_TEXTURE2D_DESC depthStencilDescription;
+			ZeroMemory(&depthStencilDescription, sizeof(depthStencilDescription));
+			depthStencilDescription.Width = mScreenWidth;
+			depthStencilDescription.Height = mScreenHeight;
+			depthStencilDescription.MipLevels = 1;
+			depthStencilDescription.ArraySize = 1;
+			depthStencilDescription.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+			depthStencilDescription.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+			depthStencilDescription.Usage = D3D11_USAGE_DEFAULT;
 
 			if (mMultiSamplingEnabled)
 			{
-				depthStencilDesc.SampleDesc.Count = mMultiSamplingCount;
-				depthStencilDesc.SampleDesc.Quality = mMultiSamplingQualityLevels - 1;
+				depthStencilDescription.SampleDesc.Count = mMultiSamplingCount;
+				depthStencilDescription.SampleDesc.Quality = mMultiSamplingQualityLevels - 1;
 			}
 			else
 			{
-				depthStencilDesc.SampleDesc.Count = 1;
-				depthStencilDesc.SampleDesc.Quality = 0;
+				depthStencilDescription.SampleDesc.Count = 1;
+				depthStencilDescription.SampleDesc.Quality = 0;
 			}
 
-			if (FAILED(hr = mDirect3DDevice->CreateTexture2D(&depthStencilDesc, nullptr, &mDepthStencilBuffer)))
+			if (FAILED(hr = mDirect3DDevice->CreateTexture2D(&depthStencilDescription, nullptr, &mDepthStencilBufferTexture)))
 			{
-				throw GameException("IDXGIDevice::CreateTexture2D() failed.", hr);
+				throw GameException("ID3D11Device1::CreateTexture2D() failed.", hr);
 			}
 
-			if (FAILED(hr = mDirect3DDevice->CreateDepthStencilView(mDepthStencilBuffer, nullptr, &mDepthStencilView)))
+			D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDescription;
+			ZeroMemory(&depthStencilViewDescription, sizeof(depthStencilViewDescription));
+			depthStencilViewDescription.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;			// The resource will be accessed as a 2D texture with multi-sampling.
+																									// More info here: https://docs.microsoft.com/en-us/windows/win32/api/d3d11/ne-d3d11-d3d11_dsv_dimension
+
+			if (FAILED(hr = mDirect3DDevice->CreateDepthStencilView(mDepthStencilBufferTexture, nullptr, &mDepthStencilView)))
 			{
-				throw GameException("IDXGIDevice::CreateDepthStencilView() failed.", hr);
+				throw GameException("ID3D11Device1::CreateDepthStencilView() failed.", hr);
 			}
-		}*/
+		}
 		#pragma endregion
 
 		mViewport.TopLeftX = 0.0f;
@@ -477,7 +482,7 @@ namespace Library
 		mViewport.MaxDepth = 1.0f;
 		
 		// Bind only one Render Target
-		mDirect3DDeviceContext->OMSetRenderTargets(1, &mRenderTargetView, nullptr);	// Not binding depth stencil view as of now.
+		mDirect3DDeviceContext->OMSetRenderTargets(1, &mRenderTargetView, mDepthStencilView);
 		mDirect3DDeviceContext->RSSetViewports(1, &mViewport);
 	}
 

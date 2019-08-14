@@ -27,6 +27,7 @@ namespace Rendering
 	void RenderingGame::Draw()
 	{
 		mDirect3DDeviceContext->ClearRenderTargetView(mRenderTargetView, reinterpret_cast<const float*>(&Library::ColorHelper::CornflowerBlue));
+		mDirect3DDeviceContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 		Game::Draw();
 

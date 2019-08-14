@@ -30,7 +30,7 @@ namespace Library
 		// Direct3D related
 		ID3D11Device* GetDirect3DDevice() const;
 		ID3D11DeviceContext* GetDirect3DDeviceContext() const;
-		//bool IsDepthStencilBufferEnabled() const;
+		bool IsDepthStencilBufferEnabled() const;
 		ID3D11RenderTargetView* GetRenderTargetView() const;
 		//ID3D11DepthStencilView* GetDepthStencilView() const;
 		float GetAspectRatio() const;
@@ -88,15 +88,15 @@ namespace Library
 
 		UINT mRefreshRate;
 		bool mIsFullScreen;			// TODO: Need to add more functionality to full screen.
-		//bool mDepthStencilBufferEnabled;
+		bool mDepthStencilBufferEnabled;
 		bool mMultiSamplingEnabled;
 		UINT mMultiSamplingCount;
 		UINT mMultiSamplingQualityLevels;
 
-		//ID3D11Texture2D* mDepthStencilBuffer;
+		ID3D11Texture2D* mDepthStencilBufferTexture;
 		D3D11_TEXTURE2D_DESC mBackBufferDesciption;
 		ID3D11RenderTargetView* mRenderTargetView;
-		//ID3D11DepthStencilView* mDepthStencilView;
+		ID3D11DepthStencilView* mDepthStencilView;
 		D3D11_VIEWPORT mViewport;
 
 	private:
