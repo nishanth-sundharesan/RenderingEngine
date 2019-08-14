@@ -4,7 +4,7 @@
 
 namespace Rendering
 {
-	class ColoredTriangle;
+	class ColoredCube;
 
 	class RenderingGame : public Library::Game
 	{
@@ -28,6 +28,6 @@ namespace Rendering
 	private:
 		static const XMVECTORF32 BackgroundColor;		
 
-		std::unique_ptr<ColoredTriangle> mColoredTriangle;
+		std::unique_ptr<ColoredCube> mColoredCube;
 	};
 }

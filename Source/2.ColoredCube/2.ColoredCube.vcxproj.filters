@@ -23,7 +23,7 @@
     <ClCompile Include="RenderingGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ColoredTriangle.cpp">
+    <ClCompile Include="ColoredCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,7 +42,7 @@
     <ClInclude Include="RenderingGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ColoredTriangle.h">
+    <ClInclude Include="ColoredCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,19 +3,19 @@
 
 namespace Rendering
 {
-	class ColoredTriangle final: public Library::DrawableGameEntity
+	class ColoredCube final: public Library::DrawableGameEntity
 	{
 	public:
-		ColoredTriangle(Library::Game& game);
-		~ColoredTriangle() = default;
+		ColoredCube(Library::Game& game);
+		~ColoredCube() = default;
 
-		ColoredTriangle() = delete;
+		ColoredCube() = delete;
 
-		ColoredTriangle(const ColoredTriangle& rhs) = delete;
-		ColoredTriangle& operator=(const ColoredTriangle& rhs) = delete;
+		ColoredCube(const ColoredCube& rhs) = delete;
+		ColoredCube& operator=(const ColoredCube& rhs) = delete;
 
-		ColoredTriangle(const ColoredTriangle&&rhs) = delete;
-		ColoredTriangle& operator=(const ColoredTriangle&& rhs) = delete;
+		ColoredCube(const ColoredCube&&rhs) = delete;
+		ColoredCube& operator=(const ColoredCube&& rhs) = delete;
 
 		virtual void Initialize() override;
 		virtual void Draw() override;

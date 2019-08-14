@@ -198,7 +198,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ColoredTriangle.cpp" />
+    <ClCompile Include="ColoredCube.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -235,7 +235,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColoredTriangle.h" />
+    <ClInclude Include="ColoredCube.h" />
     <ClInclude Include="Pch.h" />
     <ClInclude Include="RenderingGame.h" />
   </ItemGroup>

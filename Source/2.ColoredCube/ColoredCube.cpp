@@ -1,5 +1,5 @@
 #include "Pch.h"
-#include "ColoredTriangle.h"
+#include "ColoredCube.h"
 
 #include "Game.h"
 #include "Utility.h"
@@ -10,7 +10,7 @@ using namespace Library;
 
 namespace Rendering
 {
-	ColoredTriangle::ColoredTriangle(Game& game) :
+	ColoredCube::ColoredCube(Game& game) :
 		DrawableGameEntity(game),
 		mVertexShader(nullptr),
 		mPixelShader(nullptr),
@@ -20,7 +20,7 @@ namespace Rendering
 	{
 	}
 
-	void ColoredTriangle::Initialize()
+	void ColoredCube::Initialize()
 	{
 		// Load a compiled vertex shader
 		std::vector<char> compiledVertexShader;
@@ -94,7 +94,7 @@ namespace Rendering
 		mGame->GetDirect3DDeviceContext()->VSSetConstantBuffers(0, 1, &mConstantBuffer);
 	}
 
-	void ColoredTriangle::Draw()
+	void ColoredCube::Draw()
 	{
 		mTime += 0.005f;
 
@@ -113,11 +113,19 @@ namespace Rendering
 		direct3DDeviceContext->PSSetShader(mPixelShader, 0, 0);
 
 		
-		// World Matrix
-		XMMATRIX worldMatrix = XMMatrixRotationY(mTime);
+		// World Matrix		
+		XMMATRIX worldMatrix1 = XMMatrixRotationY(180.0f);// *XMMatrixTranslation(1.0f, 1.0f, 0.5f);
+		XMMATRIX translationMatrix2 = XMMatrixTranslation(0.0f, 0.0f, -5.0f);
+		
+		 
+
+		XMMATRIX rotationMatrix = XMMatrixRotationY(mTime);
+		XMMATRIX translationMatrix = XMMatrixTranslation(0.0f, 0.0f, -10.0f);
+
+		XMMATRIX worldMatrix2 = rotationMatrix * translationMatrix;
 
 		// View Matrix
-		XMVECTOR cameraPosition = XMVectorSet(1.5f, 0.5f, 1.5f, 0);
+		XMVECTOR cameraPosition = XMVectorSet(0.0f, 0.0f, 0.1f, 0);
 		XMVECTOR cameraLookAt = XMVectorReplicate(0.0f);
 		XMVECTOR cameraUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 		XMMATRIX viewMatrix = XMMatrixLookAtLH(cameraPosition, cameraLookAt, cameraUp);
@@ -125,14 +133,16 @@ namespace Rendering
 		// Projection Matrix
 		XMMATRIX projectionMatrix = XMMatrixPerspectiveFovLH(XMConvertToRadians(45), static_cast<float>(mGame->GetScreenWidth()) / mGame->GetScreenHeight(), 0.1f, 100.0f);
 
-		XMMATRIX worldViewProjectionMatrix = worldMatrix * viewMatrix * projectionMatrix;
-		mGame->GetDirect3DDeviceContext()->UpdateSubresource(mConstantBuffer, 0, 0, &worldViewProjectionMatrix, 0, 0);
+		XMMATRIX worldViewProjectionMatrix1 = worldMatrix1 * translationMatrix2 * viewMatrix * projectionMatrix;
+		mGame->GetDirect3DDeviceContext()->UpdateSubresource(mConstantBuffer, 0, 0, &worldViewProjectionMatrix1, 0, 0);
+		direct3DDeviceContext->Draw(3, 0);	// 3 is the total number of vertices.
 
-
-		direct3DDeviceContext->Draw(3, 0);	// 3 is the total number of vertices.		
+		XMMATRIX worldViewProjectionMatrix2 = worldMatrix2  * viewMatrix * projectionMatrix;
+		mGame->GetDirect3DDeviceContext()->UpdateSubresource(mConstantBuffer, 0, 0, &worldViewProjectionMatrix2, 0, 0);
+		direct3DDeviceContext->Draw(3, 0);	// 3 is the total number of vertices.
 	}
 
-	void ColoredTriangle::Shutdown()
+	void ColoredCube::Shutdown()
 	{
 		ReleaseObject(mVertexBuffer)
 		ReleaseObject(mPixelShader)
