@@ -11,7 +11,7 @@ namespace Library
 	void Utility::LoadBinaryFile(const string& filename, vector<char>& data)
 	{
 		ifstream file(filename.c_str(), ios::binary);
-		if (file.bad())
+		if (file.fail())
 		{
 			throw GameException("Could not open file.");
 		}

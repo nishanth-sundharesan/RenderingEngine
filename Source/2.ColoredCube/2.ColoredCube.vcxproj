@@ -23,7 +23,7 @@
     <ProjectGuid>{A3FA7054-4DEB-4CBF-846D-689BE67FBC8E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My1Triangle</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <ProjectName>2.ColoredCube</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
