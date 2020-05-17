@@ -24,7 +24,7 @@ namespace Rendering
 	{
 		// Load a compiled vertex shader
 		std::vector<char> compiledVertexShader;
-		Utility::LoadBinaryFile("Shaders\\VertexShader.cso", compiledVertexShader);
+		Utility::LoadBinaryFile("Shaders\\ColoredCube_VS.cso", compiledVertexShader);
 		ThrowIfFailed(
 			mGame->GetDirect3DDevice()->CreateVertexShader(
 				&compiledVertexShader[0],
@@ -35,7 +35,7 @@ namespace Rendering
 
 		// Load a compiled pixel shader
 		std::vector<char> compiledPixelShader;
-		Utility::LoadBinaryFile("Shaders\\PixelShader.cso", compiledPixelShader);
+		Utility::LoadBinaryFile("Shaders\\ColoredCube_PS.cso", compiledPixelShader);
 		ThrowIfFailed(
 			mGame->GetDirect3DDevice()->CreatePixelShader(
 				&compiledPixelShader[0],
