@@ -10,7 +10,7 @@ using namespace Library;
 
 namespace Rendering
 {
-	ColoredCube::ColoredCube(Game& game) :
+	TexturedCube::TexturedCube(Game& game) :
 		DrawableGameEntity(game),
 		mVertexShader(nullptr),
 		mPixelShader(nullptr),
@@ -20,7 +20,7 @@ namespace Rendering
 	{
 	}
 
-	void ColoredCube::Initialize()
+	void TexturedCube::Initialize()
 	{
 		// Load a compiled vertex shader
 		std::vector<char> compiledVertexShader;
@@ -132,7 +132,7 @@ namespace Rendering
 		ThrowIfFailed(mGame->GetDirect3DDevice()->CreateBuffer(&constantBufferDescription, nullptr, &mConstantBuffer), "ID3D11Device::CreateBuffer() failed.");	
 	}
 
-	void ColoredCube::Draw()
+	void TexturedCube::Draw()
 	{
 		ID3D11DeviceContext* direct3DDeviceContext = mGame->GetDirect3DDeviceContext();
 		direct3DDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -170,7 +170,7 @@ namespace Rendering
 		direct3DDeviceContext->DrawIndexed(mIndexCount, 0, 0);
 	}
 
-	void ColoredCube::Shutdown()
+	void TexturedCube::Shutdown()
 	{
 		ReleaseObject(mVertexBuffer)
 		ReleaseObject(mPixelShader)

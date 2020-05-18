@@ -1,6 +1,6 @@
-#include "ColoredCube.hlsli"
+#include "TexturedCube.hlsli"
 
-cbuffer ConstantBuffer
+cbuffer ConstantBuffer : register(b0)
 {
 	float4x4 WorldViewProjectionMatrix;
 };

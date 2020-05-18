@@ -3,19 +3,19 @@
 
 namespace Rendering
 {
-	class ColoredCube final: public Library_3::DrawableGameEntity
+	class TexturedCube final: public Library_3::DrawableGameEntity
 	{
 	public:
-		ColoredCube(Library_3::Game& game);
-		~ColoredCube() = default;
+		TexturedCube(Library_3::Game& game);
+		~TexturedCube() = default;
 
-		ColoredCube() = delete;
+		TexturedCube() = delete;
 
-		ColoredCube(const ColoredCube& rhs) = delete;
-		ColoredCube& operator=(const ColoredCube& rhs) = delete;
+		TexturedCube(const TexturedCube& rhs) = delete;
+		TexturedCube& operator=(const TexturedCube& rhs) = delete;
 
-		ColoredCube(const ColoredCube&&rhs) = delete;
-		ColoredCube& operator=(const ColoredCube&& rhs) = delete;
+		TexturedCube(const TexturedCube&&rhs) = delete;
+		TexturedCube& operator=(const TexturedCube&& rhs) = delete;
 
 		virtual void Initialize() override;
 		virtual void Draw() override;

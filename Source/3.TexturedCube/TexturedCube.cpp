@@ -1,5 +1,5 @@
 #include "Pch.h"
-#include "ColoredCube.h"
+#include "TexturedCube.h"
 
 #include "Game.h"
 #include "Utility.h"
@@ -10,21 +10,21 @@ using namespace Library_3;
 
 namespace Rendering
 {
-	ColoredCube::ColoredCube(Game& game) :
+	TexturedCube::TexturedCube(Game& game) :
 		DrawableGameEntity(game),
 		mVertexShader(nullptr),
 		mPixelShader(nullptr),
 		mInputLayout(nullptr),
-		mVertexBuffer(nullptr),		
+		mVertexBuffer(nullptr),
 		mIndexCount(0)
 	{
 	}
 
-	void ColoredCube::Initialize()
+	void TexturedCube::Initialize()
 	{
 		// Load a compiled vertex shader
 		std::vector<char> compiledVertexShader;
-		Utility::LoadBinaryFile("Shaders\\ColoredCube_VS.cso", compiledVertexShader);
+		Utility::LoadBinaryFile("Shaders\\TexturedCube_VS.cso", compiledVertexShader);
 		ThrowIfFailed(
 			mGame->GetDirect3DDevice()->CreateVertexShader(
 				&compiledVertexShader[0],
@@ -35,7 +35,7 @@ namespace Rendering
 
 		// Load a compiled pixel shader
 		std::vector<char> compiledPixelShader;
-		Utility::LoadBinaryFile("Shaders\\ColoredCube_PS.cso", compiledPixelShader);
+		Utility::LoadBinaryFile("Shaders\\TexturedCube_PS.cso", compiledPixelShader);
 		ThrowIfFailed(
 			mGame->GetDirect3DDevice()->CreatePixelShader(
 				&compiledPixelShader[0],
@@ -132,7 +132,7 @@ namespace Rendering
 		ThrowIfFailed(mGame->GetDirect3DDevice()->CreateBuffer(&constantBufferDescription, nullptr, &mConstantBuffer), "ID3D11Device::CreateBuffer() failed.");	
 	}
 
-	void ColoredCube::Draw()
+	void TexturedCube::Draw()
 	{
 		ID3D11DeviceContext* direct3DDeviceContext = mGame->GetDirect3DDeviceContext();
 		direct3DDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -170,7 +170,7 @@ namespace Rendering
 		direct3DDeviceContext->DrawIndexed(mIndexCount, 0, 0);
 	}
 
-	void ColoredCube::Shutdown()
+	void TexturedCube::Shutdown()
 	{
 		ReleaseObject(mVertexBuffer)
 		ReleaseObject(mPixelShader)
