@@ -47,32 +47,31 @@ namespace Rendering
 		// Create the input layout
 		D3D11_INPUT_ELEMENT_DESC inputElementDescriptions[] =
 		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 
 		ThrowIfFailed(
 			mGame->GetDirect3DDevice()->CreateInputLayout(
-				inputElementDescriptions,
+				inputElementDescriptions,	
 				ARRAYSIZE(inputElementDescriptions),
 				&compiledVertexShader[0],
 				compiledVertexShader.size(),
 				&mInputLayout),
-			"ID3D11Device::CreateInputLayout() failed.");		
-
+			"ID3D11Device::CreateInputLayout() failed.");
 
 		// Create a vertex buffer and initialize data
 		VertexPositionColor vertices[] =
 		{
-			VertexPositionColor(XMFLOAT3(-1.0f, +1.0f, -1.0f), XMFLOAT4(ColorHelper::Green)),
-			VertexPositionColor(XMFLOAT3(+1.0f, +1.0f, -1.0f), XMFLOAT4(ColorHelper::Yellow)),
-			VertexPositionColor(XMFLOAT3(+1.0f, +1.0f, +1.0f), XMFLOAT4(ColorHelper::White)),
-			VertexPositionColor(XMFLOAT3(-1.0f, +1.0f, +1.0f), XMFLOAT4(ColorHelper::BlueGreen)),
+			VertexPositionColor(XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT4(ColorHelper::Green)),
+			VertexPositionColor(XMFLOAT3(-1.0f, +1.0f, -1.0f), XMFLOAT4(ColorHelper::Yellow)),
+			VertexPositionColor(XMFLOAT3(+1.0f, +1.0f, -1.0f), XMFLOAT4(ColorHelper::White)),
+			VertexPositionColor(XMFLOAT3(+1.0f, -1.0f, -1.0f), XMFLOAT4(ColorHelper::BlueGreen)),
 
 			VertexPositionColor(XMFLOAT3(-1.0f, -1.0f, +1.0f), XMFLOAT4(ColorHelper::Blue)),
-			VertexPositionColor(XMFLOAT3(+1.0f, -1.0f, +1.0f), XMFLOAT4(ColorHelper::Purple)),
-			VertexPositionColor(XMFLOAT3(+1.0f, -1.0f, -1.0f), XMFLOAT4(ColorHelper::Red)),
-			VertexPositionColor(XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT4(ColorHelper::Black))
+			VertexPositionColor(XMFLOAT3(-1.0f, +1.0f, +1.0f), XMFLOAT4(ColorHelper::Purple)),
+			VertexPositionColor(XMFLOAT3(+1.0f, +1.0f, +1.0f), XMFLOAT4(ColorHelper::Red)),
+			VertexPositionColor(XMFLOAT3(+1.0f, -1.0f, +1.0f), XMFLOAT4(ColorHelper::Black))
 		};
 		
 		D3D11_BUFFER_DESC vertexBufferDescription;
@@ -94,20 +93,20 @@ namespace Rendering
 			0, 1, 2,
 			0, 2, 3,
 
-			4, 5, 6,
-			4, 6, 7,
+			3, 2, 6,
+			3, 6, 7,
 
-			3, 2, 5,
-			3, 5, 4,
+			1, 5, 2,
+			2, 5, 6,
 
-			2, 1, 6,
-			2, 6, 5,
+			4, 5, 1,
+			4, 1, 0,
 
-			1, 7, 6,
-			1, 0, 7,
+			7, 6, 4,
+			6, 5, 4,
 
-			0, 3, 4,
-			0, 4, 7
+			4, 0, 3,
+			4, 3, 7,
 		};
 
 		mIndexCount = ARRAYSIZE(indices);
@@ -157,7 +156,7 @@ namespace Rendering
 		XMMATRIX worldMatrix = XMMatrixIdentity();
 
 		// View Matrix
-		XMVECTOR cameraPosition = XMVectorSet(2.0f, 0.0f, 10.f, 0);
+		XMVECTOR cameraPosition = XMVectorSet(2.0f, 0.0f, -10.f, 0);
 		XMVECTOR cameraLookAt = XMVectorReplicate(0.0f);
 		XMVECTOR cameraUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 		XMMATRIX viewMatrix = XMMatrixLookAtLH(cameraPosition, cameraLookAt, cameraUp);
