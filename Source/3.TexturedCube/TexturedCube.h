@@ -28,7 +28,8 @@ namespace Rendering
 		ID3D11Buffer* mVertexBuffer;
 		ID3D11Buffer* mConstantBuffer;
 		ID3D11Buffer* mIndexBuffer;
-		
+		ID3D11ShaderResourceView* mCubeTextureSRV;
+
 		std::uint16_t mIndexCount;
 	};
 }

@@ -9,7 +9,7 @@ namespace Library_3
 	{
 		XMFLOAT3 Position;
 
-		VertexPosition() { }
+		VertexPosition() = default;
 
 		VertexPosition(const XMFLOAT3& position)
 			: Position(position) { }
@@ -20,9 +20,20 @@ namespace Library_3
 		XMFLOAT3 Position;
 		XMFLOAT4 Color;
 
-		VertexPositionColor() { }
+		VertexPositionColor() = default;
 
 		VertexPositionColor(const XMFLOAT3& position, const XMFLOAT4& color)
 			: Position(position), Color(color) { }
+	};
+
+	struct VertexPositionTexture
+	{
+		XMFLOAT3 Position;
+		XMFLOAT2 UV;
+
+		VertexPositionTexture() = default;
+
+		VertexPositionTexture(const XMFLOAT3& position, const XMFLOAT2& uv)
+			: Position(position), UV(uv) { }
 	};
 }

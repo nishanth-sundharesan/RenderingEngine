@@ -11,7 +11,7 @@ VS_OUTPUT main(VS_INPUT IN)
 	
 	OUT.Position = mul(WorldViewProjectionMatrix, float4(IN.Position, 1.0));
 
-	OUT.Color = IN.Color;
+	OUT.UV = IN.UV;
 
 	return OUT;
 }
