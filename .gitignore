@@ -328,3 +328,12 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# Don't ignore DirectXTK binaries
+![Bb]in/
+!External/DirectXTK/Bin/*
+!External/DirectXTK/Bin/*/*
+!External/DirectXTK/Bin/*/*/*
+
+# ! is used to negate an ignored file. But it will not work on files if the parent directory itself is ignored.
+# Hence the above format. More info here https://git-scm.com/docs/gitignore
