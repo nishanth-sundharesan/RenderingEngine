@@ -4,7 +4,7 @@
 
 namespace Rendering
 {
-	class TexturedCube;
+	class ColoredCubeCube;
 
 	class RenderingGame : public Library::Game
 	{
@@ -26,8 +26,6 @@ namespace Rendering
 		virtual void Shutdown() override;
 
 	private:
-		static const XMVECTORF32 BackgroundColor;		
-
-		std::unique_ptr<TexturedCube> mTexturedCube;
+		std::unique_ptr<ColoredCubeCube> mColoredCube;
 	};
 }

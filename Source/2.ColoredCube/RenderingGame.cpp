@@ -11,15 +11,15 @@ namespace Rendering
 {
 	RenderingGame::RenderingGame(HINSTANCE instance, const wstring& windowClassName, const wstring& windowTitle, int32_t showCommand) :
 		Game(instance, windowClassName, windowTitle, showCommand),
-		mTexturedCube(nullptr)
+		mColoredCube(nullptr)
 	{
 	}
 
 	void RenderingGame::Initialize()
 	{
-		mTexturedCube = make_unique<TexturedCube>(*this);	
+		mColoredCube = make_unique<ColoredCubeCube>(*this);
 
-		mEntities.push_back(mTexturedCube.get());
+		mEntities.push_back(mColoredCube.get());
 
 		Game::Initialize();
 	}

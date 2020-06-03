@@ -10,7 +10,7 @@ using namespace Library;
 
 namespace Rendering
 {
-	TexturedCube::TexturedCube(Game& game) :
+	ColoredCubeCube::ColoredCubeCube(Game& game) :
 		DrawableGameEntity(game),
 		mVertexShader(nullptr),
 		mPixelShader(nullptr),
@@ -20,7 +20,7 @@ namespace Rendering
 	{
 	}
 
-	void TexturedCube::Initialize()
+	void ColoredCubeCube::Initialize()
 	{
 		// Load a compiled vertex shader
 		std::vector<char> compiledVertexShader;
@@ -131,7 +131,7 @@ namespace Rendering
 		ThrowIfFailed(mGame->GetDirect3DDevice()->CreateBuffer(&constantBufferDescription, nullptr, &mConstantBuffer), "ID3D11Device::CreateBuffer() failed.");	
 	}
 
-	void TexturedCube::Draw()
+	void ColoredCubeCube::Draw()
 	{
 		ID3D11DeviceContext* direct3DDeviceContext = mGame->GetDirect3DDeviceContext();
 		direct3DDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -161,6 +161,11 @@ namespace Rendering
 		XMVECTOR cameraUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 		XMMATRIX viewMatrix = XMMatrixLookAtLH(cameraPosition, cameraLookAt, cameraUp);
 
+		// (We are using left-handed coordinate system LH, and hence the camera position is set to -ve value because we are pulling it 
+		// away from the screen. This perspective camera should also set the depth values from 0 to 1. For the depth to be inversed a different
+		// perspective function should be called, but I don't think that is available from DirectX Math library.)
+		// Read https://developer.nvidia.com/content/depth-precision-visualized regarding inverse z values.
+
 		// Projection Matrix
 		XMMATRIX projectionMatrix = XMMatrixPerspectiveFovLH(XMConvertToRadians(45), static_cast<float>(mGame->GetScreenWidth()) / mGame->GetScreenHeight(), 0.1f, 100.0f);
 
@@ -169,7 +174,7 @@ namespace Rendering
 		direct3DDeviceContext->DrawIndexed(mIndexCount, 0, 0);
 	}
 
-	void TexturedCube::Shutdown()
+	void ColoredCubeCube::Shutdown()
 	{
 		ReleaseObject(mVertexBuffer)
 		ReleaseObject(mPixelShader)

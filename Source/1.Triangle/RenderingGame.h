@@ -26,8 +26,6 @@ namespace Rendering
 		virtual void Shutdown() override;
 
 	private:
-		static const XMVECTORF32 BackgroundColor;		
-
 		std::unique_ptr<ColoredTriangle> mColoredTriangle;
 	};
 }
