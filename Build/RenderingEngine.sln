@@ -16,6 +16,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.ColoredCube", "..\Source\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.TexturedCube", "..\Source\3.TexturedCube\3.TexturedCube.vcxproj", "{2B081DB0-93DF-44AB-85B5-DDB521067662}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD5A8EF7-B7F0-482F-91A8-C180CE9383AC} = {DD5A8EF7-B7F0-482F-91A8-C180CE9383AC}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Library.3", "..\Source\Library.3\Library.3.vcxproj", "{DD5A8EF7-B7F0-482F-91A8-C180CE9383AC}"
 EndProject

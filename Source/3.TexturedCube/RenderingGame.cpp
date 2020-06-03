@@ -3,6 +3,7 @@
 #include "GameException.h"
 #include "ColorHelper.h"
 #include "TexturedCube.h"
+#include "KeyboardEntity.h"
 
 using namespace std;
 using namespace Library_3;
@@ -12,16 +13,28 @@ namespace Rendering
 	RenderingGame::RenderingGame(HINSTANCE instance, const wstring& windowClassName, const wstring& windowTitle, int32_t showCommand) :
 		Game(instance, windowClassName, windowTitle, showCommand),
 		mTexturedCube(nullptr)
-	{
+	{		
 	}
 
 	void RenderingGame::Initialize()
 	{
-		mTexturedCube = make_unique<TexturedCube>(*this);	
-
+		mTexturedCube = make_unique<TexturedCube>(*this);
 		mEntities.push_back(mTexturedCube.get());
 
+		mKeyboardEntity = make_unique<Library_3::KeyboardEntity>(*this);
+		mEntities.push_back(mKeyboardEntity.get());
+
 		Game::Initialize();
+	}
+
+	void RenderingGame::Update()
+	{
+		if (mKeyboardEntity->WasKeyPressedThisFrame(Keys::Escape))
+		{
+			Game::Exit();
+		}
+
+		Game::Update();
 	}
 
 	void RenderingGame::Draw()

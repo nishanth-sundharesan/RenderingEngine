@@ -47,7 +47,7 @@ namespace Library_3
 		virtual void Run();
 		virtual void Exit();
 		virtual void Initialize();
-		//virtual void Update(const GameTime& gameTime);
+		virtual void Update(/*const GameTime& gameTime*/);
 		virtual void Draw();
 
 		virtual void ResetRenderTargets();

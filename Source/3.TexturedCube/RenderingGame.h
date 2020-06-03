@@ -2,6 +2,11 @@
 
 #include "Game.h"
 
+namespace Library_3
+{
+	class KeyboardEntity;
+}
+
 namespace Rendering
 {
 	class TexturedCube;
@@ -20,6 +25,7 @@ namespace Rendering
 		RenderingGame& operator=(const RenderingGame&& rhs) = delete;
 
 		virtual void Initialize() override;
+		virtual void Update(/*const GameTime& gameTime*/) override;
 		virtual void Draw() override;
 
 	protected:
@@ -29,5 +35,6 @@ namespace Rendering
 		static const XMVECTORF32 BackgroundColor;		
 
 		std::unique_ptr<TexturedCube> mTexturedCube;
+		std::unique_ptr<Library_3::KeyboardEntity> mKeyboardEntity;
 	};
 }

@@ -26,7 +26,7 @@ namespace Library_3
 
 		virtual void Initialize();
 		virtual void Shutdown();
-		//virtual void Update(const GameTime& gameTime);
+		virtual void Update(/*const GameTime & gameTime*/);
 
 	protected:
 		Game* mGame;

@@ -43,8 +43,8 @@ namespace Library_3
 	{
 	}
 
-	/*void GameEntity::Update(const GameTime & gameTime)
+	void GameEntity::Update(/*const GameTime & gameTime*/)
 	{
-	}*/
+	}
 }
 

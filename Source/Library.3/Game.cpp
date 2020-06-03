@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "DrawableGameEntity.h"
 
+#include <DirectXTK/Keyboard.h>
+
 using namespace std;
 
 namespace Library_3
@@ -31,7 +33,7 @@ namespace Library_3
 		mDepthStencilBufferEnabled(true),
 		mMultiSamplingEnabled(true),
 		mMultiSamplingCount(sDefaultMultiSamplingCount),
-		mMultiSamplingQualityLevels(0),		
+		mMultiSamplingQualityLevels(0),
 		mRenderTargetView(nullptr),
 		mDepthStencilView(nullptr),
 		mViewport(),
@@ -175,7 +177,7 @@ namespace Library_3
 			}
 
 			//mGameClock.UpdateGameTime(mGameTime);
-			//Update(mGameTime);
+			Update(/*mGameTime*/);
 			Draw();
 		}
 
@@ -197,16 +199,16 @@ namespace Library_3
 		Begin();
 	}
 
-	//void Game::Update(const GameTime& gameTime)
-	//{
-	//	for (GameComponent* component : mComponents)
-	//	{
-	//		if (component->Enabled())
-	//		{
-	//			component->Update(gameTime);
-	//		}
-	//	}
-	//}
+	void Game::Update(/*const GameTime& gameTime*/)
+	{
+		for (GameEntity* entity : mEntities)
+		{
+			if (entity->Enabled())
+			{
+				entity->Update(/*gameTime*/);
+			}
+		}
+	}
 
 	void Game::Draw()
 	{
@@ -495,7 +497,7 @@ namespace Library_3
 		}
 
 		ReleaseObject(mRenderTargetView);
-		//ReleaseObject(mDepthStencilView);
+		ReleaseObject(mDepthStencilView);
 		ReleaseObject(mSwapChain);
 		//ReleaseObject(mDepthStencilBuffer);
 
@@ -531,6 +533,23 @@ namespace Library_3
 				// Send message to close the application. WM_QUIT or 0.
 				PostQuitMessage(WM_QUIT);
 				return 0;
+			}
+			break;
+
+			// For the DirectXTK keyboard to function, these functions have to be called when the windows app receives
+			// the following messages. More info here: https://github.com/microsoft/DirectXTK/wiki/Keyboard
+			case WM_ACTIVATEAPP:
+			{
+				DirectX::Keyboard::ProcessMessage(message, wParam, lParam);
+			}
+			break;
+
+			case WM_KEYDOWN:
+			case WM_SYSKEYDOWN:
+			case WM_KEYUP:
+			case WM_SYSKEYUP:
+			{
+				DirectX::Keyboard::ProcessMessage(message, wParam, lParam);
 			}
 			break;
 		}

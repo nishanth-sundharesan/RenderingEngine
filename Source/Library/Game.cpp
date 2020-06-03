@@ -32,9 +32,8 @@ namespace Library
 		mMultiSamplingEnabled(true),
 		mMultiSamplingCount(sDefaultMultiSamplingCount),
 		mMultiSamplingQualityLevels(0),
-		//mDepthStencilBuffer(nullptr),
 		mRenderTargetView(nullptr),
-		//mDepthStencilView(nullptr),
+		mDepthStencilView(nullptr),
 		mViewport(),
 		mEntities()
 		//mServices()
@@ -363,7 +362,7 @@ namespace Library
 		if (mMultiSamplingEnabled)
 		{
 			swapChainDesc.SampleDesc.Count = mMultiSamplingCount;
-			swapChainDesc.SampleDesc.Quality = mMultiSamplingQualityLevels - 1;	// Need to research and verify if the sample level/quality should be set to this
+			swapChainDesc.SampleDesc.Quality = mMultiSamplingQualityLevels - 1;
 		}
 		else
 		{
@@ -467,7 +466,7 @@ namespace Library
 			depthStencilViewDescription.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;			// The resource will be accessed as a 2D texture with multi-sampling.
 																									// More info here: https://docs.microsoft.com/en-us/windows/win32/api/d3d11/ne-d3d11-d3d11_dsv_dimension
 
-			if (FAILED(hr = mDirect3DDevice->CreateDepthStencilView(mDepthStencilBufferTexture, nullptr, &mDepthStencilView)))
+			if (FAILED(hr = mDirect3DDevice->CreateDepthStencilView(mDepthStencilBufferTexture, &depthStencilViewDescription, &mDepthStencilView)))
 			{
 				throw GameException("ID3D11Device1::CreateDepthStencilView() failed.", hr);
 			}
@@ -496,7 +495,7 @@ namespace Library
 		}
 
 		ReleaseObject(mRenderTargetView);
-		//ReleaseObject(mDepthStencilView);
+		ReleaseObject(mDepthStencilView);
 		ReleaseObject(mSwapChain);
 		//ReleaseObject(mDepthStencilBuffer);
 
