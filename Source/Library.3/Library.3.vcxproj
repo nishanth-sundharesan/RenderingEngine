@@ -161,6 +161,7 @@
     <ClCompile Include="GameException.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="KeyboardEntity.cpp" />
+    <ClCompile Include="MouseEntity.cpp" />
     <ClCompile Include="PchLibrary.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PchLibrary.h</PrecompiledHeaderFile>
@@ -179,6 +180,7 @@
     <ClInclude Include="GameException.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="KeyboardEntity.h" />
+    <ClInclude Include="MouseEntity.h" />
     <ClInclude Include="PchLibrary.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="VertexDeclarations.h" />

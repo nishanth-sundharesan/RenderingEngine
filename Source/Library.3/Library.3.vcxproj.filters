@@ -41,6 +41,9 @@
     <ClCompile Include="KeyboardEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MouseEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -75,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="KeyboardEntity.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseEntity.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
