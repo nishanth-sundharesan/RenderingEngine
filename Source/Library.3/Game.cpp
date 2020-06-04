@@ -3,6 +3,7 @@
 #include "DrawableGameEntity.h"
 
 #include <DirectXTK/Keyboard.h>
+#include <DirectXTK/Mouse.h>
 
 using namespace std;
 
@@ -536,11 +537,12 @@ namespace Library_3
 			}
 			break;
 
-			// For the DirectXTK keyboard to function, these functions have to be called when the windows app receives
+			// For the DirectXTK keyboard and mouse to function, these functions have to be called when the windows app receives
 			// the following messages. More info here: https://github.com/microsoft/DirectXTK/wiki/Keyboard
 			case WM_ACTIVATEAPP:
 			{
 				DirectX::Keyboard::ProcessMessage(message, wParam, lParam);
+				DirectX::Mouse::ProcessMessage(message, wParam, lParam);
 			}
 			break;
 
@@ -550,6 +552,25 @@ namespace Library_3
 			case WM_SYSKEYUP:
 			{
 				DirectX::Keyboard::ProcessMessage(message, wParam, lParam);
+			}
+			break;
+
+			// For the DirectXTK mouse to function, these functions have to be called when the windows app receives
+			// the following messages. More info here: https://github.com/Microsoft/DirectXTK/wiki/Mouse
+			case WM_INPUT:
+			case WM_MOUSEMOVE:
+			case WM_LBUTTONDOWN:
+			case WM_LBUTTONUP:
+			case WM_RBUTTONDOWN:
+			case WM_RBUTTONUP:
+			case WM_MBUTTONDOWN:
+			case WM_MBUTTONUP:
+			case WM_MOUSEWHEEL:
+			case WM_XBUTTONDOWN:
+			case WM_XBUTTONUP:
+			case WM_MOUSEHOVER:
+			{
+				DirectX::Mouse::ProcessMessage(message, wParam, lParam);
 			}
 			break;
 		}

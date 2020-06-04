@@ -1,6 +1,8 @@
 #include "PchLibrary.h"
 #include "KeyboardEntity.h"
 
+// Info: https://github.com/microsoft/DirectXTK/wiki/Keyboard
+
 namespace Library_3
 {
 	std::unique_ptr<DirectX::Keyboard> KeyboardEntity::sKeyboard(new DirectX::Keyboard);

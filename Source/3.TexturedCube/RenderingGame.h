@@ -5,6 +5,7 @@
 namespace Library_3
 {
 	class KeyboardEntity;
+	class MouseEntity;
 }
 
 namespace Rendering
@@ -36,5 +37,6 @@ namespace Rendering
 
 		std::unique_ptr<TexturedCube> mTexturedCube;
 		std::unique_ptr<Library_3::KeyboardEntity> mKeyboardEntity;
+		std::unique_ptr<Library_3::MouseEntity> mMouseEntity;
 	};
 }

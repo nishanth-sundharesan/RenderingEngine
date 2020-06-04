@@ -1,9 +1,11 @@
 #include "Pch.h"
 #include "RenderingGame.h"
+
 #include "GameException.h"
 #include "ColorHelper.h"
 #include "TexturedCube.h"
 #include "KeyboardEntity.h"
+#include "MouseEntity.h"
 
 using namespace std;
 using namespace Library_3;
@@ -24,12 +26,15 @@ namespace Rendering
 		mKeyboardEntity = make_unique<Library_3::KeyboardEntity>(*this);
 		mEntities.push_back(mKeyboardEntity.get());
 
+		mMouseEntity = make_unique<Library_3::MouseEntity>(*this, MouseModes::Absolute);
+		mEntities.push_back(mMouseEntity.get());
+
 		Game::Initialize();
 	}
 
 	void RenderingGame::Update()
 	{
-		if (mKeyboardEntity->WasKeyPressedThisFrame(Keys::Escape))
+		if (mKeyboardEntity->WasKeyPressedThisFrame(Keys::Escape) || mMouseEntity->WasButtonPressedThisFrame(MouseButtons::X2))
 		{
 			Game::Exit();
 		}
